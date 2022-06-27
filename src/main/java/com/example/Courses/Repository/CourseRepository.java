@@ -1,6 +1,6 @@
-package com.example.demo.Repository;
+package com.example.Courses.Repository;
 
-import com.example.demo.Model.Course;
+import com.example.Courses.Model.Course;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

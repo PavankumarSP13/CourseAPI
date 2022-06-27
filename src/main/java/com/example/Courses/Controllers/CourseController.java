@@ -1,14 +1,12 @@
-package com.example.demo.Controllers;
+package com.example.Courses.Controllers;
 
-import com.example.demo.Model.Course;
-import com.example.demo.Model.Topic;
-import com.example.demo.Services.CourseService;
+import com.example.Courses.Model.Course;
+import com.example.Courses.Model.Topic;
+import com.example.Courses.Services.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.Id;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class CourseController {
@@ -31,14 +29,14 @@ public class CourseController {
     @RequestMapping(method = RequestMethod.POST,value = "/topics/{topicId}/courses")
     public void addCourse(@RequestBody Course course,@PathVariable String topicId)
     {
-        course.setTopic(new Topic(topicId,"",""));
+//        course.setTopic(new Topic(topicId,"",""));
         courseService.addCourse(course);
     }
 
     @RequestMapping(method = RequestMethod.PUT,value = "/topics/{topicId}/courses/{id}")
     public void updateCourse(@RequestBody Course course,@PathVariable String topicId,@PathVariable String id)
     {
-        course.setTopic(new Topic(topicId,"",""));
+//        course.setTopic(new Topic(topicId,"",""));
         courseService.updateCourse(course);
     }
 
