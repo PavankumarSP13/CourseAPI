@@ -1,18 +1,19 @@
 package com.example.Courses.Repository;
 
 
-import com.example.Courses.Model.Topic;
+import com.example.Courses.Model.TopicDAO;
+import com.example.Courses.Model.TopicDTO;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.transaction.annotation.Transactional;
+
+
+public interface TopicRepository extends CrudRepository<TopicDAO, String> {
+
+    TopicDAO findById(int id);
+
+    Iterable<TopicDAO> findAll();
 
 
 
-public interface TopicRepository extends CrudRepository<Topic, String> {
 
-    Topic findById(int id);
-
-    Iterable<Topic> findAll();
-
-
-   void deleteById(int id);
+    TopicDTO deleteById(TopicDAO topicDAO);
 }

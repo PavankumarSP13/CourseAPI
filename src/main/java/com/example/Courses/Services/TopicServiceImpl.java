@@ -1,7 +1,8 @@
 package com.example.Courses.Services;
 
 import com.example.Courses.Converter.TopicConverter;
-import com.example.Courses.Model.Topic;
+import com.example.Courses.Exceptions.ResponseTopic;
+import com.example.Courses.Model.TopicDAO;
 import com.example.Courses.Model.TopicDTO;
 import com.example.Courses.Repository.TopicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,41 +23,60 @@ public class TopicServiceImpl implements TopicService {
     private TopicConverter topicConverter;
 
     public List<TopicDTO> getAllTopics() {
-        List<Topic> topics = new ArrayList<>();
-        topicRepository.findAll().forEach(topics::add);//It's in Java 8, Convert it into Java 7
-        return topicConverter.entityToDto(topics);
+        List<TopicDAO> topicDAOS = new ArrayList<>();
+        topicRepository.findAll().forEach(topicDAOS::add);//It's in Java 8, Convert it into Java 7
+        return topicConverter.entityToDto(topicDAOS);
     }
 
     public TopicDTO getTopic(int id) {
-        Topic topic= topicRepository.findById(id);
-        return topicConverter.entityToDto(topic);
-        //return topics.stream().filter(t->t.getId().equals(id)).findFirst().get();
-    }
+         TopicDAO topicDAO=topicRepository.findById(id);
+         return topicConverter.entityToDto(topicDAO);
+}
 
 
-    public TopicDTO addTopic(TopicDTO dto)
+    public TopicDTO addTopic(TopicDTO topicDTO)
     {
-        Topic topic = topicConverter.dtoToEntity(dto);
-        topicRepository.save(topic);
-        return topicConverter.entityToDto(topic);
+        TopicDAO topicDAO = topicConverter.dtoToEntity(topicDTO);
+        topicRepository.save(topicDAO);
+        return  topicConverter.entityToDto(topicDAO);
     }
 
-    public TopicDTO updateTopic(int id, TopicDTO dto )
+
+    public TopicDTO updateTopic(int id, TopicDTO topicDTO)
     {
-        Topic topic = topicConverter.dtoToEntity(dto);
-        topicRepository.save(topic);
-        return topicConverter.entityToDto(topic);
+        TopicDAO topicDAO = topicConverter.dtoToEntity(topicDTO);
+        topicRepository.save(topicDAO);
+        return topicConverter.entityToDto(topicDAO);
     }
 
-    public TopicDTO updateTopicPartial(int id, TopicDTO dto, String name)
+    public void updateTopicPartial(int id, String name)
     {
-        Topic topic = topicConverter.dtoToEntity(dto);
-        topicRepository.save(topic);
-        return topicConverter.entityToDto(topic);
+         TopicDAO topicDAO = topicRepository.findById(id);
+         topicDAO.setName(name);
+         topicRepository.save(topicDAO);
+
     }
 
-    public void deleteTopic(int id) {
-        topicRepository.deleteById(id);
 
+//    public ResponseTopic<TopicDTO> deleteTopic(int id) {
+//        ResponseTopic<TopicDTO> response = new ResponseTopic<>();
+//        Optional<TopicDAO> db = Optional.of((topicRepository.findById(id)));
+//        if (db.isPresent()) {
+//            TopicDTO t = new TopicDTO(db.get());
+//            response.setBody(t);
+//            response.setMessage("Topic Details deleted for id: " + id);
+//            response.setStatus(200);
+//            topicRepository.deleteById(id);
+//        } else {
+//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "TopicID Not Found in DB.");
+//        }
+//        return response;
+
+//    }
+
+    public TopicDTO deleteTopic(int id,TopicDTO topicDTO) {
+        TopicDAO topicDAO = topicConverter.dtoToEntity(topicDTO);
+        topicRepository.deleteById(topicDAO);
+        return topicConverter.entityToDto(topicDAO);
     }
 }

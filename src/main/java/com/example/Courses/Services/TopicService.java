@@ -1,6 +1,6 @@
 package com.example.Courses.Services;
 
-import com.example.Courses.Model.Topic;
+import com.example.Courses.Exceptions.ResponseTopic;
 import com.example.Courses.Model.TopicDTO;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -12,12 +12,13 @@ public interface TopicService {
 
     TopicDTO getTopic(int id);
 
-    TopicDTO addTopic(TopicDTO dto);
+    TopicDTO addTopic(TopicDTO topicDTO);
 
-    TopicDTO updateTopic(int id, TopicDTO dto );
+    TopicDTO updateTopic(int id, TopicDTO topicDTO);
 
-    TopicDTO updateTopicPartial(int id, TopicDTO dto, String name);
+    void updateTopicPartial(int id, String name);
 
-    void deleteTopic(int id);
+    TopicDTO deleteTopic(int id,TopicDTO topicDTO);
+
 
 }
